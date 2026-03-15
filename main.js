@@ -1,6 +1,36 @@
 document.addEventListener('DOMContentLoaded', () => {
     const generateBtn = document.getElementById('generate-btn');
     const lottoNumbersContainer = document.getElementById('lotto-numbers');
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    // Theme logic
+    const currentTheme = localStorage.getItem('theme');
+    if (currentTheme) {
+        body.classList.add(currentTheme);
+        updateThemeIcon(currentTheme);
+    }
+
+    themeToggle.addEventListener('click', () => {
+        if (body.classList.contains('light-mode')) {
+            body.classList.remove('light-mode');
+            localStorage.setItem('theme', '');
+            updateThemeIcon('');
+        } else {
+            body.classList.add('light-mode');
+            localStorage.setItem('theme', 'light-mode');
+            updateThemeIcon('light-mode');
+        }
+    });
+
+    function updateThemeIcon(theme) {
+        const icon = themeToggle.querySelector('i');
+        if (theme === 'light-mode') {
+            icon.classList.replace('fa-moon', 'fa-sun');
+        } else {
+            icon.classList.replace('fa-sun', 'fa-moon');
+        }
+    }
 
     const getNumberColor = (number) => {
         if (number <= 10) return '#fbc400'; // Yellow

@@ -2,6 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
 :root {
+    /* Default Dark Mode (Original) */
     --bg-color: #1a1a1a;
     --container-color: #2a2a2a;
     --text-color: #ffffff;
@@ -9,6 +10,18 @@
     --secondary-color: #8f94fb;
     --shadow-color: rgba(0, 0, 0, 0.5);
     --glow-color: rgba(78, 84, 200, 0.7);
+    --dot-color: #333333;
+}
+
+body.light-mode {
+    --bg-color: #f4f4f9;
+    --container-color: #ffffff;
+    --text-color: #333333;
+    --primary-color: #6a11cb;
+    --secondary-color: #2575fc;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --glow-color: rgba(106, 17, 203, 0.3);
+    --dot-color: #dddddd;
 }
 
 body {
@@ -21,18 +34,45 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="4" height="4" viewBox="0 0 4 4"%3E%3Cpath fill="%23333333" fill-opacity="0.4" d="M1 3h1v1H1V3zm2-2h1v1H3V1z"%3E%3C/path%3E%3C/svg%3E');
+    background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="4" height="4" viewBox="0 0 4 4"%3E%3Cpath fill="%23' + var(--dot-color).replace('#', '') + '" fill-opacity="0.4" d="M1 3h1v1H1V3zm2-2h1v1H3V1z"%3E%3C/path%3E%3C/svg%3E');
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Background dots fallback/fix for CSS variables in URL */
+body {
+    background-image: radial-gradient(var(--dot-color) 1px, transparent 1px);
+    background-size: 20px 20px;
 }
 
 .container {
     background-color: var(--container-color);
     padding: 40px;
     border-radius: 20px;
-    box-shadow: 0 15px 35px var(--shadow-color), 0 5px 15px rgba(0,0,0,0.3);
+    box-shadow: 0 15px 35px var(--shadow-color), 0 5px 15px rgba(0,0,0,0.1);
     text-align: center;
     width: 100%;
     max-width: 500px;
+    transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+}
+
+.theme-switch {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+#theme-toggle {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 1.5em;
+    cursor: pointer;
     transition: transform 0.3s ease;
+}
+
+#theme-toggle:hover {
+    transform: rotate(20deg) scale(1.2);
 }
 
 .container:hover {
